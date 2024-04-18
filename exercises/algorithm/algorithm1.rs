@@ -69,15 +69,51 @@ impl<T> LinkedList<T> {
             },
         }
     }
-	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self
-	{
-		//TODO
-		Self {
-            length: 0,
-            start: None,
-            end: None,
+	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self {
+        let list_c = LinkedList::new();
+        let len_a = list_a.length;
+        let len_b = list_b.length;
+        let mut i: i32 = 0; let mut j: i32 = 0;
+        while(i < len_a && j < len_b) {
+            let a = list_a.get(i);
+            let b = list_b.get(j);
+            if b.is_none() || (a.is_some() && a.unwrap().val < b.unwrap().val) {
+                list_c.add(a.unwrap());
+                i += 1;
+            } else {
+                list_c.add(b.unwrap());
+                j += 1;
+            }
         }
-	}
+        list_c
+    }
+	// {
+		// let mut list_c = LinkedList::<T>::new();
+        // let mut node_a = list_a.start;
+        // let mut node_b = list_b.start;
+        // while node_a.is_some() && node_b.is_some(){
+        //     let val_a = unsafe {node_a.unwrap().as_ref().val};
+        //     let val_b = unsafe {node_b.unwrap().as_ref().val};
+        //     if val_a < val_b {
+        //         list_c.add(val_a);
+        //         node_a = unsafe {node_a.unwrap().as_ref().next};
+        //     }else{
+        //         list_c.add(val_b);
+        //         node_b = unsafe {node_b.unwrap().as_ref().next};
+        //     }
+        // }
+        // while node_a.is_some(){
+        //     let val_a = unsafe {node_a.unwrap().as_ref().val};
+        //     list_c.add(val_a);
+        //     node_a = unsafe {node_a.unwrap().as_ref().next};
+        // }
+        // while node_b.is_some(){
+        //     let val_b = unsafe {node_b.unwrap().as_ref().val};
+        //     list_c.add(val_b);
+        //     node_b = unsafe {node_b.unwrap().as_ref().next};
+        // }
+        // list_c
+	// }
 }
 
 impl<T> Display for LinkedList<T>
