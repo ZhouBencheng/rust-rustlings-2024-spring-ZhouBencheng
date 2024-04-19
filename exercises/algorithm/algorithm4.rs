@@ -3,7 +3,7 @@
 	This problem requires you to implement a basic interface for a binary tree
 */
 
-//I AM NOT DONE
+
 use std::cmp::Ordering;
 use std::fmt::Debug;
 
@@ -51,12 +51,46 @@ where
     // Insert a value into the BST
     fn insert(&mut self, value: T) {
         //TODO
+        if let None = self.root {
+            self.root = Some(Box::new(TreeNode::new(value)));
+        } else {
+            let mut cur = &mut self.root;
+            while cur.is_some() {
+                let ptr = cur.as_mut().unwrap().as_mut();
+                if value < ptr.value {
+                    if ptr.left.is_none() {
+                        ptr.insert(value);
+                        return ();
+                    }
+                    cur = &mut ptr.left;
+                } else if value > ptr.value {
+                    if ptr.right.is_none() {
+                        ptr.insert(value);
+                        return();
+                    }
+                    cur = &mut ptr.right;
+                } else {
+                    return ();
+                }
+            }
+        }
     }
 
     // Search for a value in the BST
     fn search(&self, value: T) -> bool {
         //TODO
-        true
+        let mut cur = &self.root;
+        while cur.is_some() {
+            let ptr = cur.as_ref().unwrap().as_ref(); //为什么要把引用cur as_ref()为引用再解Option?
+            if ptr.value == value {
+                return true;
+            } else if ptr.value < value {
+                cur = &ptr.right;
+            } else {
+                cur = &ptr.left;
+            }
+        }
+        return false;
     }
 }
 
@@ -67,6 +101,11 @@ where
     // Insert a node into the tree
     fn insert(&mut self, value: T) {
         //TODO
+        if value <= self.value {
+            self.left = Some(Box::new(TreeNode::new(value)));
+        } else {
+            self.right = Some(Box::new(TreeNode::new(value)));
+        }
     }
 }
 

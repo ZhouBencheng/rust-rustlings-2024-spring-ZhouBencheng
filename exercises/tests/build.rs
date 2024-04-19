@@ -20,8 +20,8 @@ fn main() {
     // In tests8, we should enable "pass" feature to make the
     // testcase return early. Fill in the command to tell
     // Cargo about that.
-    //! #[cfg(feature = " ")]是条件编译属性，允许在编译是根据和特定条件排除代码
-    //! 使用rustc-cfg=feature=""命令，可以在编译时启用某特性
+    // #[cfg(feature = " ")]是条件编译属性，允许在编译是根据和特定条件排除代码
+    // 使用rustc-cfg=feature=""命令，可以在编译时启用某特性
     let your_command = "rustc-cfg=feature=\"pass\"";
     println!("cargo::{}", your_command);
 }

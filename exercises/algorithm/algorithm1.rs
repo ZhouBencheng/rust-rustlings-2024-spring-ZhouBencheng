@@ -2,7 +2,7 @@
 	single linked list merge
 	This problem requires you to merge two ordered singly linked lists into one ordered singly linked list
 */
-// I AM NOT DONE
+
 
 use std::fmt::{self, Display, Formatter};
 use std::ptr::NonNull;
@@ -29,13 +29,13 @@ struct LinkedList<T> {
     end: Option<NonNull<Node<T>>>,
 }
 
-impl<T> Default for LinkedList<T> {
+impl<T: std::cmp::PartialOrd + Clone> Default for LinkedList<T> {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<T> LinkedList<T> {
+impl<T: std::cmp::PartialOrd + Clone> LinkedList<T> {
     pub fn new() -> Self {
         Self {
             length: 0,
@@ -69,19 +69,19 @@ impl<T> LinkedList<T> {
             },
         }
     }
-	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self {
-        let list_c = LinkedList::new();
-        let len_a = list_a.length;
-        let len_b = list_b.length;
+	pub fn merge(mut list_a:LinkedList<T>,mut list_b:LinkedList<T>) -> Self {
+        let mut list_c = LinkedList::new();
+        let len_a = list_a.length as i32;
+        let len_b = list_b.length as i32;
         let mut i: i32 = 0; let mut j: i32 = 0;
-        while(i < len_a && j < len_b) {
+        while i < len_a || j < len_b  {
             let a = list_a.get(i);
             let b = list_b.get(j);
-            if b.is_none() || (a.is_some() && a.unwrap().val < b.unwrap().val) {
-                list_c.add(a.unwrap());
+            if b.is_none() || (a.is_some() && a.unwrap() < b.unwrap()) {
+                list_c.add(a.unwrap().clone());
                 i += 1;
             } else {
-                list_c.add(b.unwrap());
+                list_c.add(b.unwrap().clone());
                 j += 1;
             }
         }
